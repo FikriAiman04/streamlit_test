@@ -5,10 +5,10 @@ import requests
 st.title('FIKRI STREAMLIT') 
 
 # Add a welcome message 
-st.write('Welcome to my Fikri Streamlit app!') 
+st.write('Welcome to Fikri Streamlit app!') 
 
 # Create a text input 
-widgetuser_input = st.text_input('Enter a custom message:', 'Hello, Streamlit!') 
+widgetuser_input = st.text_input('Enter a custom message:', 'Hello, Fikri Streamlit!') 
 
 # Display the customized message 
 st.write('Customized Message:', widgetuser_input)
