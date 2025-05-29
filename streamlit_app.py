@@ -1,32 +1,34 @@
 import streamlit as st
-import requests
 
-# Set the app title 
-st.title('FIKRI STREAMLIT')
+# Set the app title
+st.title("🧮 Simple Calculator")
 
-# Add a welcome message 
-st.write('Welcome to Fikri Streamlit app!')
+# Add a welcome message
+st.write("Welcome to the Streamlit Calculator App!")
 
-# Create a text input 
-widgetuser_input = st.text_input('Enter a custom message:', 'Hello, Fikri Streamlit!')
+# Input numbers
+num1 = st.number_input("Enter first number:", value=0.0, format="%.2f")
+num2 = st.number_input("Enter second number:", value=0.0, format="%.2f")
 
-# Display the customized message 
-st.write('Customized Message:', widgetuser_input)
+# Select operation
+operation = st.selectbox("Select operation:", ["Add", "Subtract", "Multiply", "Divide"])
 
-# Dropdown to select base currency
-currencies = ['USD', 'EUR', 'GBP', 'JPY', 'AUD', 'CAD', 'CHF', 'CNY', 'SEK', 'NZD']  # Add more as needed
-base_currency = st.selectbox('Select Base Currency:', currencies)
+# Perform calculation
+if operation == "Add":
+    result = num1 + num2
+elif operation == "Subtract":
+    result = num1 - num2
+elif operation == "Multiply":
+    result = num1 * num2
+elif operation == "Divide":
+    if num2 != 0:
+        result = num1 / num2
+    else:
+        result = "Error: Division by zero"
 
-# API call using the selected base currency
-response = requests.get(f'https://api.vatcomply.com/rates?base={base_currency}')
+# Display result
+st.write(f"**Result:** {result}")
 
-# Display the results
-if response.status_code == 200:
-    data = response.json()
-    st.write(f'Exchange rates for base currency: {base_currency}')
-    st.json(data)
-else:
-    st.error(f"API call failed with status code: {response.status_code}")
 
 
 
