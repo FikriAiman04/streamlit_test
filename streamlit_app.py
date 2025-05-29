@@ -1,10 +1,13 @@
 import streamlit as st
 
 # Set the app title
-st.title("🧮 Simple Calculator")
+st.title("🧮 Enhanced Calculator with Number System Converter")
 
-# Add a welcome message
+# Welcome message
 st.write("Welcome to the Streamlit Calculator App!")
+
+# --- Basic Calculator Section ---
+st.header("Basic Calculator")
 
 # Input numbers
 num1 = st.number_input("Enter first number:", value=0.0, format="%.2f")
@@ -28,6 +31,24 @@ elif operation == "Divide":
 
 # Display result
 st.write(f"**Result:** {result}")
+
+# --- Number System Converter Section ---
+st.header("Number System Converter")
+
+# Input a number (as integer)
+int_input = st.number_input("Enter an integer to convert:", value=0, step=1)
+
+# Convert to binary, decimal, and hexadecimal
+binary = bin(int(int_input))[2:]
+decimal = int(int_input)
+hexadecimal = hex(int(int_input))[2:].upper()
+
+# Display conversions
+st.subheader("Conversions")
+st.write(f"**Binary:** {binary}")
+st.write(f"**Decimal:** {decimal}")
+st.write(f"**Hexadecimal:** {hexadecimal}")
+
 
 
 
