@@ -1,66 +1,59 @@
-import streamlit as st
-import base64
+// App.jsx
+import React, { useState } from "react";
 
-# ---- Set custom dragon background using base64 image ----
-def set_background(base64_str):
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/png;base64,{base64_str}");
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+function App() {
+  const [repos, setRepos] = useState([
+    { id: 1, name: "example-repo", description: "My first project." },
+  ]);
+  const [newRepo, setNewRepo] = useState("");
 
-# Paste your base64 string here (replace the content below with your actual image data)
-dragon_base64 = "YOUR_BASE64_STRING_HERE"
-set_background(dragon_base64)
+  const addRepo = () => {
+    if (!newRepo) return;
+    setRepos([...repos, { id: Date.now(), name: newRepo, description: "New project." }]);
+    setNewRepo("");
+  };
 
-# ---- App Title and Welcome ----
-st.title("🧮 Enhanced Calculator with Dragon Theme")
-st.write("Welcome to the **Dragon-Themed Streamlit Calculator App!**")
+  return (
+    <div className="p-6 max-w-xl mx-auto">
+      {/* Mercedes-Benz Link */}
+      <div className="mb-6 bg-gray-100 p-4 rounded-lg shadow">
+        <a
+          href="https://www.mercedes-benz.com.my/passengercars/models.html"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-600 hover:underline text-lg font-semibold"
+        >
+          🚘 View All Mercedes-Benz Car Models
+        </a>
+      </div>
 
-# ---- Basic Calculator ----
-st.header("Basic Calculator")
+      <h1 className="text-3xl font-bold mb-4">My GitHub Clone</h1>
 
-num1 = st.number_input("Enter first number:", value=0.0, format="%.2f")
-num2 = st.number_input("Enter second number:", value=0.0, format="%.2f")
+      <div className="mb-4">
+        <input
+          className="border px-2 py-1 w-full"
+          placeholder="New repository name"
+          value={newRepo}
+          onChange={(e) => setNewRepo(e.target.value)}
+        />
+        <button className="bg-blue-500 text-white px-4 py-1 mt-2" onClick={addRepo}>
+          Add Repository
+        </button>
+      </div>
 
-operation = st.selectbox("Select operation:", ["Add", "Subtract", "Multiply", "Divide"])
+      <ul>
+        {repos.map((repo) => (
+          <li key={repo.id} className="mb-2 border-b pb-2">
+            <h2 className="text-xl font-semibold">{repo.name}</h2>
+            <p className="text-sm text-gray-600">{repo.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
-if operation == "Add":
-    result = num1 + num2
-elif operation == "Subtract":
-    result = num1 - num2
-elif operation == "Multiply":
-    result = num1 * num2
-elif operation == "Divide":
-    result = num1 / num2 if num2 != 0 else "Error: Division by zero"
-
-st.write(f"**Result:** {result}")
-
-# ---- Number System Converter ----
-st.header("Number System Converter")
-
-int_input = st.number_input("Enter an integer to convert:", value=0, step=1)
-
-binary = bin(int(int_input))[2:]
-decimal = int(int_input)
-hexadecimal = hex(int(int_input))[2:].upper()
-
-st.subheader("Conversions")
-st.write(f"**Binary:** {binary}")
-st.write(f"**Decimal:** {decimal}")
-st.write(f"**Hexadecimal:** {hexadecimal}")
-
-
-
-
+export default App;
 
 
 
