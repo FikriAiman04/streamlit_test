@@ -2,30 +2,45 @@
 
 import streamlit as st
 
-st.set_page_config(page_title="Basic Calculator", page_icon="🧮")
+# Simulasi senarai model Mercedes-Benz Malaysia
+mercedes_models = [
+    "A-Class Hatchback",
+    "A-Class Sedan",
+    "C-Class Sedan",
+    "E-Class Sedan",
+    "S-Class Sedan",
+    "GLA SUV",
+    "GLB SUV",
+    "GLC SUV",
+    "GLE SUV",
+    "GLS SUV",
+    "AMG GT",
+    "EQE Sedan",
+    "EQS Sedan",
+    "EQB SUV",
+    "EQC SUV",
+]
 
-st.title("🧮 Basic Calculator")
-st.markdown("Perform basic arithmetic operations.")
+# Streamlit App
+st.set_page_config(page_title="Mercedes-Benz Car Finder", page_icon="🚗")
+st.title("🚗 Mercedes-Benz Car Model Search (Malaysia)")
+st.markdown("[Laman rasmi Mercedes-Benz Malaysia](https://www.mercedes-benz.com.my/)")
 
-# User inputs
-num1 = st.number_input("Enter first number:", format="%.2f")
-operation = st.selectbox("Select operation:", ["+", "-", "*", "/"])
-num2 = st.number_input("Enter second number:", format="%.2f")
+# Search box
+query = st.text_input("🔍 Cari model (contoh: GLC, EQ, Sedan):")
 
-# Calculate based on operation
-def calculate(a, b, op):
-    try:
-        if op == "+":
-            return a + b
-        elif op == "-":
-            return a - b
-        elif op == "*":
-            return a * b
-        elif op == "/":
-            return a / b if b != 0 else "Cannot divide by zero"
-    except Exception as e:
-        return f"Error: {e}"
+# Search logic
+if query:
+    results = [model for model in mercedes_models if query.lower() in model.lower()]
+    if results:
+        st.success(f"{len(results)} model dijumpai:")
+        for model in results:
+            st.markdown(f"✅ {model}")
+    else:
+        st.warning("❌ Tiada model ditemui.")
+else:
+    st.info("Sila masukkan kata kunci carian.")
 
-if st.button("Calculate"):
-    result = calculate(num1, num2, operation)
-    st.success(f"Result: {result}")
+# Optional styling / footer
+st.markdown("---")
+st.caption("Dibina dengan ❤️ oleh Streamlit. Maklumat model berdasarkan laman rasmi Mercedes-Benz Malaysia.")
