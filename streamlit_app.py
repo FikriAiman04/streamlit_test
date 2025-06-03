@@ -1,39 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Basic Calculator</title>
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <div class="calculator">
-    <input type="text" id="display" disabled />
-    <div class="buttons">
-      <button onclick="clearDisplay()">C</button>
-      <button onclick="appendValue('/')">÷</button>
-      <button onclick="appendValue('*')">×</button>
-      <button onclick="appendValue('7')">7</button>
-      <button onclick="appendValue('8')">8</button>
-      <button onclick="appendValue('9')">9</button>
-      <button onclick="appendValue('-')">−</button>
-      <button onclick="appendValue('4')">4</button>
-      <button onclick="appendValue('5')">5</button>
-      <button onclick="appendValue('6')">6</button>
-      <button onclick="appendValue('+')">+</button>
-      <button onclick="appendValue('1')">1</button>
-      <button onclick="appendValue('2')">2</button>
-      <button onclick="appendValue('3')">3</button>
-      <button onclick="calculate()">=</button>
-      <button onclick="appendValue('0')">0</button>
-      <button onclick="appendValue('.')">.</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
-</html>
+# app.py
 
+import streamlit as st
 
+st.set_page_config(page_title="Basic Calculator", page_icon="🧮")
 
+st.title("🧮 Basic Calculator")
+st.markdown("Perform basic arithmetic operations.")
 
+# User inputs
+num1 = st.number_input("Enter first number:", format="%.2f")
+operation = st.selectbox("Select operation:", ["+", "-", "*", "/"])
+num2 = st.number_input("Enter second number:", format="%.2f")
 
+# Calculate based on operation
+def calculate(a, b, op):
+    try:
+        if op == "+":
+            return a + b
+        elif op == "-":
+            return a - b
+        elif op == "*":
+            return a * b
+        elif op == "/":
+            return a / b if b != 0 else "Cannot divide by zero"
+    except Exception as e:
+        return f"Error: {e}"
+
+if st.button("Calculate"):
+    result = calculate(num1, num2, operation)
+    st.success(f"Result: {result}")
