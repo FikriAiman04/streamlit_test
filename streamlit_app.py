@@ -1,59 +1,49 @@
-// App.jsx
-import React, { useState } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malay Translator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🇲🇾 Malay Translator</h1>
+    <textarea id="inputText" placeholder="Taip dalam Bahasa Melayu..."></textarea>
+    <select id="targetLang">
+      <option value="en">English</option>
+      <option value="fr">French</option>
+      <option value="zh">Chinese</option>
+      <option value="es">Spanish</option>
+      <option value="ja">Japanese</option>
+    </select>
+    <button onclick="translateText()">Translate</button>
+    <div id="result"></div>
+  </div>
 
-function App() {
-  const [repos, setRepos] = useState([
-    { id: 1, name: "example-repo", description: "My first project." },
-  ]);
-  const [newRepo, setNewRepo] = useState("");
+  <script>
+    async function translateText() {
+      const text = document.getElementById("inputText").value;
+      const targetLang = document.getElementById("targetLang").value;
 
-  const addRepo = () => {
-    if (!newRepo) return;
-    setRepos([...repos, { id: Date.now(), name: newRepo, description: "New project." }]);
-    setNewRepo("");
-  };
+      const response = await fetch("https://libretranslate.de/translate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          q: text,
+          source: "ms",
+          target: targetLang,
+          format: "text"
+        })
+      });
 
-  return (
-    <div className="p-6 max-w-xl mx-auto">
-      {/* Mercedes-Benz Link */}
-      <div className="mb-6 bg-gray-100 p-4 rounded-lg shadow">
-        <a
-          href="https://www.mercedes-benz.com.my/passengercars/models.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-blue-600 hover:underline text-lg font-semibold"
-        >
-          🚘 View All Mercedes-Benz Car Models
-        </a>
-      </div>
+      const data = await response.json();
+      document.getElementById("result").innerText = "Translation: " + data.translatedText;
+    }
+  </script>
+</body>
+</html>
 
-      <h1 className="text-3xl font-bold mb-4">My GitHub Clone</h1>
-
-      <div className="mb-4">
-        <input
-          className="border px-2 py-1 w-full"
-          placeholder="New repository name"
-          value={newRepo}
-          onChange={(e) => setNewRepo(e.target.value)}
-        />
-        <button className="bg-blue-500 text-white px-4 py-1 mt-2" onClick={addRepo}>
-          Add Repository
-        </button>
-      </div>
-
-      <ul>
-        {repos.map((repo) => (
-          <li key={repo.id} className="mb-2 border-b pb-2">
-            <h2 className="text-xl font-semibold">{repo.name}</h2>
-            <p className="text-sm text-gray-600">{repo.description}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-export default App;
 
 
 
