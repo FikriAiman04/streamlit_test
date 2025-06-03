@@ -2,47 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Malay Translator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Basic Calculator</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>🇲🇾 Malay Translator</h1>
-    <textarea id="inputText" placeholder="Taip dalam Bahasa Melayu..."></textarea>
-    <select id="targetLang">
-      <option value="en">English</option>
-      <option value="fr">French</option>
-      <option value="zh">Chinese</option>
-      <option value="es">Spanish</option>
-      <option value="ja">Japanese</option>
-    </select>
-    <button onclick="translateText()">Translate</button>
-    <div id="result"></div>
+  <div class="calculator">
+    <input type="text" id="display" disabled />
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="appendValue('/')">÷</button>
+      <button onclick="appendValue('*')">×</button>
+      <button onclick="appendValue('7')">7</button>
+      <button onclick="appendValue('8')">8</button>
+      <button onclick="appendValue('9')">9</button>
+      <button onclick="appendValue('-')">−</button>
+      <button onclick="appendValue('4')">4</button>
+      <button onclick="appendValue('5')">5</button>
+      <button onclick="appendValue('6')">6</button>
+      <button onclick="appendValue('+')">+</button>
+      <button onclick="appendValue('1')">1</button>
+      <button onclick="appendValue('2')">2</button>
+      <button onclick="appendValue('3')">3</button>
+      <button onclick="calculate()">=</button>
+      <button onclick="appendValue('0')">0</button>
+      <button onclick="appendValue('.')">.</button>
+    </div>
   </div>
-
-  <script>
-    async function translateText() {
-      const text = document.getElementById("inputText").value;
-      const targetLang = document.getElementById("targetLang").value;
-
-      const response = await fetch("https://libretranslate.de/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          q: text,
-          source: "ms",
-          target: targetLang,
-          format: "text"
-        })
-      });
-
-      const data = await response.json();
-      document.getElementById("result").innerText = "Translation: " + data.translatedText;
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
 
 
